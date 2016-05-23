@@ -4,17 +4,42 @@
   <meta charset="utf-8">
   
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
-  <title>silence的博客</title>
+  <title>对iOS多线程的一点见解(二) | silence的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="描述在哪里,描述啥">
-<meta property="og:type" content="website">
-<meta property="og:title" content="silence的博客">
-<meta property="og:url" content="http://yoursite.com/index.html">
+  <meta name="description" content="“我就是想给你整个世界”“那你整呗”
+
+继续分享多线程GCD概念
+任务 : 任务是在方法的block中执行
+队列 : 将任务放到队列中去执行,遵循FIFO原则(先进先出)
+串行队列 : 顺序执行,一个一个执行,前一个任务执行完才可以执行下一个任务
+并发队列 : 同时执行,同时执行多个任务,可同时取出多个任务,只要有线程去执行
+同步 sync : 不会开辟新线程
+异步 async : 会开辟新线">
+<meta property="og:type" content="article">
+<meta property="og:title" content="对iOS多线程的一点见解(二)">
+<meta property="og:url" content="http://yoursite.com/2016/05/23/欢迎进入我的领域/index.html">
 <meta property="og:site_name" content="silence的博客">
-<meta property="og:description" content="描述在哪里,描述啥">
+<meta property="og:description" content="“我就是想给你整个世界”“那你整呗”
+
+继续分享多线程GCD概念
+任务 : 任务是在方法的block中执行
+队列 : 将任务放到队列中去执行,遵循FIFO原则(先进先出)
+串行队列 : 顺序执行,一个一个执行,前一个任务执行完才可以执行下一个任务
+并发队列 : 同时执行,同时执行多个任务,可同时取出多个任务,只要有线程去执行
+同步 sync : 不会开辟新线程
+异步 async : 会开辟新线">
+<meta property="og:updated_time" content="2016-05-23T14:30:59.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="silence的博客">
-<meta name="twitter:description" content="描述在哪里,描述啥">
+<meta name="twitter:title" content="对iOS多线程的一点见解(二)">
+<meta name="twitter:description" content="“我就是想给你整个世界”“那你整呗”
+
+继续分享多线程GCD概念
+任务 : 任务是在方法的block中执行
+队列 : 将任务放到队列中去执行,遵循FIFO原则(先进先出)
+串行队列 : 顺序执行,一个一个执行,前一个任务执行完才可以执行下一个任务
+并发队列 : 同时执行,同时执行多个任务,可同时取出多个任务,只要有线程去执行
+同步 sync : 不会开辟新线程
+异步 async : 会开辟新线">
   
     <link rel="alternative" href="/atom.xml" title="silence的博客" type="application/atom+xml">
   
@@ -200,9 +225,7 @@
 	</div>
 </nav>
 
-      <div class="body-wrap">
-  
-    <article id="post-欢迎进入我的领域" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-欢迎进入我的领域" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
       <a href="/2016/05/23/欢迎进入我的领域/" class="article-date">
@@ -218,12 +241,19 @@
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/05/23/欢迎进入我的领域/">对iOS多线程的一点见解(二)</a>
+    <h1 class="article-title" itemprop="name">
+      对iOS多线程的一点见解(二)
     </h1>
   
 
       </header>
+      
+      <div class="article-info article-info-post">
+        
+        
+
+        <div class="clearfix"></div>
+      </div>
       
     
     <div class="article-entry" itemprop="articleBody">
@@ -265,174 +295,68 @@
       
     </div>
     
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-    
   </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2016/05/22/多线程见解/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">多线程见解</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
   
 </article>
 
 
+<div class="share_jia">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">Share to: &nbsp; </span>
+		<a class="jiathis_button_facebook"></a> 
+    <a class="jiathis_button_twitter"></a>
+    <a class="jiathis_button_plus"></a> 
+    <a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
 
 
 
 
 
 
-
-  
-    <article id="post-多线程见解" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2016/05/22/多线程见解/" class="article-date">
-  	<time datetime="2016-05-22T07:49:38.000Z" itemprop="datePublished">2016-05-22</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/05/22/多线程见解/">多线程见解</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="一个iOS初学者对多线程的一点见解-都是概念上的一些理解-欢迎大家来围观"><a href="#一个iOS初学者对多线程的一点见解-都是概念上的一些理解-欢迎大家来围观" class="headerlink" title="一个iOS初学者对多线程的一点见解,都是概念上的一些理解,欢迎大家来围观"></a>一个iOS初学者对多线程的一点见解,都是概念上的一些理解,欢迎大家来围观</h1><blockquote>
-<p>假如生活欺骗了你,不要悲伤,不要心急</p>
-<p>因为,没什么卵用<br>         <em>沃-兹基硕德</em></p>
-</blockquote>
-<h2 id="1-多线程的优势和劣势"><a href="#1-多线程的优势和劣势" class="headerlink" title="1 多线程的优势和劣势"></a>1 多线程的优势和劣势</h2><p>在iOS开发中,至少有一条线程,即主线程,也可以叫UI线程<br>如果在程序运行期间有某一操作耗时较长,但这时只有一条线程,即UI线程,就会造成界面”卡顿”,即在耗时操作运行期间,UI线程无法响应其他操作,例如,点击一个button,或者拖动slider,这样都是不可以的,只有当该耗时操作完成后才可以进行其他操作<br>造成极差的用户体验<br><strong>这对苹果用户来说是及其难以接受的</strong></p>
-<p>此时我们就可以开辟另外的线程来进行耗时操作,而不影响我们的界面运行,感觉上是多个任务同时执行,但这其实只是逻辑上的,而非物理上的</p>
-<p>然而是否需要创建多个线程取决于各种因素。在以下情况下,最适合采用多线程处理: </p>
-<p>(1)耗时或大量占用处理器的任务阻塞用户界面操作;</p>
-<p>(2)各个任务必须等待外部资源 (最明显的比如下载)。</p>
-<p>(3)各个线程可以单独管理,迅雷的每个下载进程都可以暂停/继续</p>
-<p>多线程也存在许多缺点 ,在考虑多线程时需要进行充分的考虑。多线程的主要缺点包括: </p>
-<p>(1)对线程进行管理要求额外的 CPU开销。线程的使用会给系统带来上下文切换的额外负担。当这种负担超过一定程度时,多线程的特点主要表现在其缺点上,比如占用大量的内存,线程数目过多也会造成每个线程的调用率降低,比如迅雷的下载,如果同时下载10个电影,这样的话每个都很慢</p>
-<p>(2)线程的死锁。即较长时间的等待或资源竞争。</p>
-<p>(3)对公有变量的同时读或写。当多个线程需要对公有变量<strong>同时</strong>进行读写操作时,后一个线程往往会修改掉前一个线程存放的数据,从而使前一个线程的参数被修改;另外 ,当公用变量的读写操作是非原子性时,在不同的机器上,中断时间的不确定性,会导致数据在一个线程内的操作产生错误,从而产生莫名其妙的错误,而这种错误是我们无法预知的。<strong>这是一个巨大的隐患 但是这是可以通过加互斥锁来解决</strong>。</p>
-<blockquote>
-<p>@synchronized</p>
-</blockquote>
-<hr>
-<h2 id="2-原子性-atomic"><a href="#2-原子性-atomic" class="headerlink" title="2 原子性 atomic"></a>2 原子性 atomic</h2><h3 id="原子性本身就是针对多线程设计的-它实现的功能是单-线程-写多-线程-读"><a href="#原子性本身就是针对多线程设计的-它实现的功能是单-线程-写多-线程-读" class="headerlink" title="原子性本身就是针对多线程设计的 它实现的功能是单(线程)写多(线程)读"></a>原子性本身就是针对多线程设计的 它实现的功能是单(线程)写多(线程)读</h3><p>大家一般声明属性的时候一般都用 nonatomic<br>但其实默认情况下是 atomic </p>
-<p><strong>苹果并不推荐使用原子属性,因为会降低程序的运行速度</strong></p>
-<p>当语义设置是atomic的时候默认的setter方法就是这样的</p>
-<figure class="highlight objc"><figcaption><span>-(void)setObj:(NSObject *)obj</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line"><span class="comment">//原子性内部使用 自旋锁</span></span><br><span class="line"><span class="keyword">@synchronized</span>(<span class="keyword">self</span>)&#123;</span><br><span class="line">   _obj = obj;</span><br><span class="line"> &#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>此时加的锁不是互斥锁,互斥锁的概念是write和read同时加锁,即setter和getter都加锁 </p>
-<p>自旋锁只给setter方法加锁,因为readwriter语义中,write的权限要求更高一点</p>
-<h2 id="3-线程安全"><a href="#3-线程安全" class="headerlink" title="3 线程安全"></a>3 线程安全</h2><p>线程安全就是多个线程同时执行的时候,可以保证资源信息的准确性</p>
-<h2 id="4-UI线程-即主线程"><a href="#4-UI线程-即主线程" class="headerlink" title="4 UI线程  即主线程"></a>4 UI线程  即主线程</h2><p>UIKit 中绝大部分的类,都不是”线程安全”的<br>因为都是nonatomic</p>
-<p><strong>苹果约定,所有UI的更新全部放进主线程中,也就不会出现多个线程改写同一个资源</strong></p>
-<p>在主线程更新UI的好处</p>
-<ul>
-<li>不会出现线程安全问题</li>
-<li>主线程的优先级是最高的,UI的更新的优先级也高,会让用户感觉到很流畅,因为用户只能看到UI </li>
-</ul>
-
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="欢迎进入我的领域" data-title="对iOS多线程的一点见解(二)" data-url="http://yoursite.com/2016/05/23/欢迎进入我的领域/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"true"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
 
 
 
 
-
-
-
-
-
-  
-    <article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2016/05/13/hello-world/" class="article-date">
-  	<time datetime="2016-05-13T04:51:48.000Z" itemprop="datePublished">2016-05-13</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/05/13/hello-world/">Hello World</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
-
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-  
 </div>
       <footer id="footer">
   <div class="outer">
@@ -456,8 +380,8 @@
 		fancybox: true,
 		mathjax: true,
 		animate: true,
-		isHome: true,
-		isPost: false,
+		isHome: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
 		isCategory: false,
