@@ -4,23 +4,24 @@
   <meta charset="utf-8">
   
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
-  <title>Hello World | silence的博客</title>
+  <title>沙盒缓存的处理 | silence的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.
-Quick">
+  <meta name="description" content="UITableViewcell 下载图片的思路 - 沙盒的(内存)缓存,以及踩过的一些坑,这里我只说思路,代码可以去网上扒系统的tableViewcell里面是有ImageView的属性的,所以我们可以考虑给它直接赋值这里的资源不用问,肯定要从网上下载了
+
+最开始的思路呢就是给model类里添加一个url的字符串属性,然后在tableviewcontroller中的cellforrow方法中,将">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hello World">
-<meta property="og:url" content="http://yoursite.com/2016/05/13/hello-world/index.html">
+<meta property="og:title" content="沙盒缓存的处理">
+<meta property="og:url" content="http://yoursite.com/2016/05/24/沙盒缓存的处理/index.html">
 <meta property="og:site_name" content="silence的博客">
-<meta property="og:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.
-Quick">
-<meta property="og:image" content="http://ww4.sinaimg.cn/bmiddle/aa397b7fjw1dzplsgpdw5j.jpg">
-<meta property="og:updated_time" content="2016-05-24T12:23:29.000Z">
+<meta property="og:description" content="UITableViewcell 下载图片的思路 - 沙盒的(内存)缓存,以及踩过的一些坑,这里我只说思路,代码可以去网上扒系统的tableViewcell里面是有ImageView的属性的,所以我们可以考虑给它直接赋值这里的资源不用问,肯定要从网上下载了
+
+最开始的思路呢就是给model类里添加一个url的字符串属性,然后在tableviewcontroller中的cellforrow方法中,将">
+<meta property="og:updated_time" content="2016-05-24T15:29:41.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hello World">
-<meta name="twitter:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.
-Quick">
-<meta name="twitter:image" content="http://ww4.sinaimg.cn/bmiddle/aa397b7fjw1dzplsgpdw5j.jpg">
+<meta name="twitter:title" content="沙盒缓存的处理">
+<meta name="twitter:description" content="UITableViewcell 下载图片的思路 - 沙盒的(内存)缓存,以及踩过的一些坑,这里我只说思路,代码可以去网上扒系统的tableViewcell里面是有ImageView的属性的,所以我们可以考虑给它直接赋值这里的资源不用问,肯定要从网上下载了
+
+最开始的思路呢就是给model类里添加一个url的字符串属性,然后在tableviewcontroller中的cellforrow方法中,将">
   
     <link rel="alternative" href="/atom.xml" title="silence的博客" type="application/atom+xml">
   
@@ -206,11 +207,11 @@ Quick">
 	</div>
 </nav>
 
-      <div class="body-wrap"><article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-沙盒缓存的处理" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2016/05/13/hello-world/" class="article-date">
-  	<time datetime="2016-05-13T04:51:48.000Z" itemprop="datePublished">2016-05-13</time>
+      <a href="/2016/05/24/沙盒缓存的处理/" class="article-date">
+  	<time datetime="2016-05-24T14:30:07.000Z" itemprop="datePublished">2016-05-24</time>
 </a>
     </div>
   
@@ -223,7 +224,7 @@ Quick">
         
   
     <h1 class="article-title" itemprop="name">
-      Hello World
+      沙盒缓存的处理
     </h1>
   
 
@@ -239,15 +240,18 @@ Quick">
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a><br><img src="http://ww4.sinaimg.cn/bmiddle/aa397b7fjw1dzplsgpdw5j.jpg" alt=""></p>
+        <hr>
+<h1 id="UITableViewcell-下载图片的思路-沙盒的-内存-缓存-以及踩过的一些坑-这里我只说思路-代码可以去网上扒"><a href="#UITableViewcell-下载图片的思路-沙盒的-内存-缓存-以及踩过的一些坑-这里我只说思路-代码可以去网上扒" class="headerlink" title="UITableViewcell 下载图片的思路 - 沙盒的(内存)缓存,以及踩过的一些坑,这里我只说思路,代码可以去网上扒"></a>UITableViewcell 下载图片的思路 - 沙盒的(内存)缓存,以及踩过的一些坑,这里我只说思路,代码可以去网上扒</h1><p>系统的tableViewcell里面是有ImageView的属性的,所以我们可以考虑给它直接赋值<br>这里的资源不用问,肯定要从网上下载了</p>
+<ol>
+<li><p>最开始的思路呢就是给model类里添加一个url的字符串属性,然后在tableviewcontroller中的cellforrow方法中,将url取出并异步下载图片即可<br>在下载之前要给cell一个占位图,否则下载完成后的图片是没有frame的,不能显示在cell上,还可以通过自定义cell的方法解决这个问题</p>
+</li>
+<li><p>如果使用上述方法有可能会造成什么后果呢?各个图片下载的速度不一致,在快速滚动tableView的时候cell的重用可能会导致图片的混乱,此时不能直接给cell的图片直接复制,而必须通过MVC,中间加上model类,通过点语法来给默认的cell图片赋值<strong>这里可能有一些问题啊,就是既然是model里的url,那么怎么会有MVC的问题呢,那就是Data是用model.url,但是在给图片赋值的时候可能用的是cell.imageView.image = image; 这样略过model类,就会造成图片的混乱,而且后面的管理也会遇到一些困难</strong></p>
+</li>
+<li><p><strong>这里说一下内存问题</strong>用户滚动的时候,若当前照片未下载完成,会造成重复添加下载任务,此时的解决办法就是将这些下载任务添加到字典中,通过判断只进行一次下载,字典的key值就是url,而value值就是nsoperation对象,即下载任务,判断如果任务存在就不添加下载任务,如果不存在就添加下载任务</p>
+<p>在tableViewController里声明两个属性,一个数组和一个字典<br>字典用来存缓存的图片,数组用来管理下载任务</p>
+<p>model类中不能直接放图片属性,否则管理内存时不方便,耦合度比较高<br>在model类中声明字符串取url即可</p>
+</li>
+</ol>
 
       
     </div>
@@ -257,15 +261,11 @@ Quick">
     
 <nav id="article-nav">
   
-    <a href="/2016/05/22/多线程见解/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption"><</strong>
-      <div class="article-nav-title">
-        
-          多线程见解
-        
-      </div>
-    </a>
   
+    <a href="/2016/05/23/欢迎进入我的领域/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">对iOS多线程的一点见解(二)</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
   
 </nav>
 
@@ -298,7 +298,7 @@ Quick">
 
 <div class="duoshuo">
 	<!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="hello-world" data-title="Hello World" data-url="http://yoursite.com/2016/05/13/hello-world/"></div>
+	<div class="ds-thread" data-thread-key="沙盒缓存的处理" data-title="沙盒缓存的处理" data-url="http://yoursite.com/2016/05/24/沙盒缓存的处理/"></div>
 	<!-- 多说评论框 end -->
 	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 	<script type="text/javascript">
