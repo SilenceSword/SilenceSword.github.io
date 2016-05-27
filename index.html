@@ -79,7 +79,7 @@
 						<li>Links</li>
 						
 						
-						<li>About</li>
+						<li>Über</li>
 						
 					</ul>
 				</div>
@@ -202,6 +202,137 @@
 
       <div class="body-wrap">
   
+    <article id="post-block的使用" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/05/26/block的使用/" class="article-date">
+  	<time datetime="2016-05-26T12:36:54.000Z" itemprop="datePublished">2016-05-26</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/05/26/block的使用/">block的使用</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="block-的使用"><a href="#block-的使用" class="headerlink" title="block 的使用"></a>block 的使用</h1><p>block是一种数据类型,可以封装代码<br>他和一般函数的区别就是可以在写函数的内部或方法内部</p>
+<p>void(*指针名称)();<br>定义一个无参无返回值block类型的变量<br>void(^Block名称)();<br>实现一个无参无返回值的block<br><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span> (^block)() = ^&#123;</span><br><span class="line">        <span class="built_in">NSLog</span>(<span class="string">@"testblock"</span>);</span><br><span class="line">    &#125;;</span><br><span class="line">    <span class="comment">//上面是定义,需要调用才可以打印</span></span><br><span class="line">    block();</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-网络基础和GET-POST请求" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/05/25/网络基础和GET-POST请求/" class="article-date">
+  	<time datetime="2016-05-25T11:24:58.000Z" itemprop="datePublished">2016-05-25</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/05/25/网络基础和GET-POST请求/">网络基础和GET/POST请求</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <hr>
+<h1 id="先说一下GET网络请求和POST网络请求的区别"><a href="#先说一下GET网络请求和POST网络请求的区别" class="headerlink" title="先说一下GET网络请求和POST网络请求的区别"></a>先说一下GET网络请求和POST网络请求的区别</h1><ul>
+<li>GET方法是将服务器需要的参数放在网址后面,以?作为标记,以&amp;作为多个参数的连接符,这个方法不太安全,可以在网址上直接看到你的用户名和密码等信息</li>
+<li>POST方法将服务器需要的参数放到http的body中,传递给服务器,body默认是加密的,不能直接看到,相对GET安全一些</li>
+<li>一般发起获取数据请求用GET,发起提交数据请求用POST</li>
+</ul>
+<blockquote>
+<p>“<a href="http://ipad-bjwb.bjd.com.cn/DigitalPublication/publish/Handler/APINewsList.ashx?date=20131129&amp;startRecord=1&amp;len=16&amp;udid=1234567890&amp;terminalType=Iphone&amp;cid=213" target="_blank" rel="external">http://ipad-bjwb.bjd.com.cn/DigitalPublication/publish/Handler/APINewsList.ashx?date=20131129&amp;startRecord=1&amp;len=16&amp;udid=1234567890&amp;terminalType=Iphone&amp;cid=213</a>“ </p>
+</blockquote>
+<p> 像上面这段网址”?”的后面就是服务器需要的参数,像date,startRecord,len等等都是服务器需要的参数,假如登录的时候用GET请求,那网址”?”的后面就是username和password,因为对象的命名都是见名知意,别人就可以轻易拿到你的密码和用户名,这样就很容易造成损失</p>
+<p> 那么在iOS中是如何进行网络请求的呢,代码如下,这是同步请求<br> <figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#define GETURL @<span class="meta-string">"http://ipad-bjwb.bjd.com.cn/DigitalPublication/publish/Handler/APINewsList.ashx?date=20131129&amp;startRecord=1&amp;len=16&amp;udid=1234567890&amp;terminalType=Iphone&amp;cid=213"</span></span></span><br><span class="line"><span class="comment">//1.创建URL对象</span></span><br><span class="line">   <span class="built_in">NSURL</span> *url = [<span class="built_in">NSURL</span> URLWithString:GETURL];</span><br><span class="line">   <span class="comment">//2.创建请求对象</span></span><br><span class="line">   <span class="built_in">NSURLRequest</span> *request = [[<span class="built_in">NSURLRequest</span> alloc]initWithURL:url];</span><br><span class="line">   <span class="comment">//3.向服务器发送一个同步请求</span></span><br><span class="line">   <span class="built_in">NSData</span> *data = [<span class="built_in">NSURLConnection</span> sendSynchronousRequest:request returningResponse:<span class="literal">nil</span> error:<span class="literal">nil</span>];</span><br></pre></td></tr></table></figure></p>
+<p> 还有异步请求 异步请求方法和同步类似,就是NSURLConnection sendAsync<br> <figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//创建URL对象</span></span><br><span class="line">   <span class="built_in">NSURL</span> *url = [<span class="built_in">NSURL</span> URLWithString:GETURL];</span><br><span class="line">   <span class="comment">//创建请求对象</span></span><br><span class="line">   <span class="built_in">NSURLRequest</span> *request = [[<span class="built_in">NSURLRequest</span> alloc]initWithURL:url];</span><br><span class="line">   <span class="comment">//发送block异步请求</span></span><br><span class="line">   [<span class="built_in">NSURLConnection</span> sendAsynchronousRequest:request queue:[<span class="built_in">NSOperationQueue</span> mainQueue] completionHandler:^(<span class="built_in">NSURLResponse</span> * _Nullable response, <span class="built_in">NSData</span> * _Nullable data, <span class="built_in">NSError</span> * _Nullable connectionError) &#123;</span><br><span class="line">       <span class="comment">//在这里解析数据,data就是解析返回的数据</span></span><br><span class="line">       &#125;</span><br><span class="line">   &#125;];</span><br></pre></td></tr></table></figure></p>
+<h2 id="POST请求"><a href="#POST请求" class="headerlink" title="POST请求"></a>POST请求</h2><p>POST请求将参数存到body中,默认加密,但是此时就要将参数和路径分开来进行请求,需要对url进行拆分<br>POST同步<br><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#define POSTURL @<span class="meta-string">"http://ipad-bjwb.bjd.com.cn/DigitalPublication/publish/Handler/APINewsList.ashx"</span></span></span><br><span class="line"><span class="meta">#define POSTBODY @<span class="meta-string">"date=20131129&amp;startRecord=1&amp;len=16&amp;udid=1234567890&amp;terminalType=Iphone&amp;cid=213"</span></span></span><br><span class="line"><span class="comment">//1.创建URL对象</span></span><br><span class="line">    <span class="built_in">NSURL</span> *url = [<span class="built_in">NSURL</span> URLWithString:POSTURL];</span><br><span class="line">    <span class="comment">//2.创建请求对象</span></span><br><span class="line">    <span class="built_in">NSMutableURLRequest</span> *request = [<span class="built_in">NSMutableURLRequest</span> requestWithURL:url];</span><br><span class="line">    <span class="comment">//3设置请求方式,默认是GET</span></span><br><span class="line">    [request setHTTPMethod:<span class="string">@"POST"</span>];</span><br><span class="line">    [request setHTTPBody:[POSTBODY dataUsingEncoding:<span class="built_in">NSUTF8StringEncoding</span>]];</span><br><span class="line">     <span class="comment">//4.向服务器发送请求</span></span><br><span class="line">    <span class="built_in">NSData</span> *data = [<span class="built_in">NSURLConnection</span> sendSynchronousRequest:request returningResponse:<span class="literal">nil</span> error:<span class="literal">nil</span>];</span><br></pre></td></tr></table></figure></p>
+<h2 id="iOS9网络请求新架构"><a href="#iOS9网络请求新架构" class="headerlink" title="iOS9网络请求新架构"></a>iOS9网络请求新架构</h2><ol>
+<li>不再有同步了,只有异步</li>
+<li>新引入了一个对象, NSURLSession来进行网络请求管理</li>
+<li>将网络请求中常见的几种任务分出类别</li>
+</ol>
+<ul>
+<li>dataTask 常见的数据请求</li>
+<li>downloadTask 下载文件</li>
+<li>uploadTask 上传文件<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//使用DataTask来下载图片</span></span><br><span class="line">   <span class="comment">//1.创建URL对象</span></span><br><span class="line">   <span class="built_in">NSURL</span> *url = [<span class="built_in">NSURL</span> URLWithString:IMAGEURL];</span><br><span class="line">   <span class="built_in">NSMutableURLRequest</span> *request = [[<span class="built_in">NSMutableURLRequest</span> alloc]initWithURL:url];</span><br><span class="line">   <span class="comment">//2.创建NSURLSession对象, 它是一个单例对象, 管理App与服务器的通信</span></span><br><span class="line">   <span class="built_in">NSURLSession</span> *session = [<span class="built_in">NSURLSession</span> sharedSession];</span><br><span class="line">   <span class="comment">//3.创建任务对象</span></span><br><span class="line">   <span class="built_in">NSURLSessionDownloadTask</span> *downloadTask = [session downloadTaskWithRequest:request completionHandler:^(<span class="built_in">NSURL</span> * _Nullable location, <span class="built_in">NSURLResponse</span> * _Nullable response, <span class="built_in">NSError</span> * _Nullable error) &#123;</span><br><span class="line">       <span class="comment">//location代表的是本地文件的地址</span></span><br><span class="line">       <span class="comment">//1.根据location创建UIImage</span></span><br><span class="line">       <span class="built_in">UIImage</span> *image = [<span class="built_in">UIImage</span> imageWithData:[<span class="built_in">NSData</span> dataWithContentsOfURL:location]];</span><br><span class="line">       <span class="comment">//新版的网络请求方法数据返回和处理是在子线程中的,不是在主线程,不能直接在子线程中更新界面元素</span></span><br><span class="line">       <span class="comment">//拿到主线程,并给他添加一个修改界面的任务</span></span><br><span class="line">       <span class="built_in">dispatch_async</span>(dispatch_get_main_queue(), ^&#123;</span><br><span class="line">           <span class="comment">//2.将image更新到界面</span></span><br><span class="line">           <span class="keyword">self</span>.imgView.image = image;</span><br><span class="line">       &#125;);            </span><br><span class="line">   &#125;];</span><br><span class="line">   <span class="comment">//4.启动下载任务</span></span><br><span class="line">[downloadTask resume];</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>使用iOS9的新方法来进行POST请求</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//使用代理的方式进行数据请求</span></span><br><span class="line">   <span class="built_in">NSURL</span> *url = [<span class="built_in">NSURL</span> URLWithString:POSTURL];</span><br><span class="line">   <span class="built_in">NSMutableURLRequest</span> *request = [[<span class="built_in">NSMutableURLRequest</span> alloc]initWithURL:url];</span><br><span class="line">   [request setHTTPMethod:<span class="string">@"POST"</span>];</span><br><span class="line">   [request setHTTPBody:[POSTBODY dataUsingEncoding:<span class="built_in">NSUTF8StringEncoding</span>]];</span><br><span class="line">   <span class="built_in">NSURLSession</span> *session = [<span class="built_in">NSURLSession</span> sessionWithConfiguration:[<span class="built_in">NSURLSessionConfiguration</span> defaultSessionConfiguration] delegate:<span class="keyword">self</span> delegateQueue:[<span class="built_in">NSOperationQueue</span> mainQueue]];</span><br><span class="line">   <span class="comment">//创建DataTask</span></span><br><span class="line">   <span class="built_in">NSURLSessionDataTask</span> *dataTask = [session dataTaskWithRequest:request];</span><br><span class="line">   <span class="comment">//开始任务</span></span><br><span class="line">   [dataTask resume];</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
     <article id="post-沙盒缓存的处理" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
@@ -219,7 +350,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2016/05/24/沙盒缓存的处理/">沙盒缓存的处理</a>
+      <a class="article-title" href="/2016/05/24/沙盒缓存的处理/">无沙盒缓存的处理</a>
     </h1>
   
 
@@ -229,7 +360,7 @@
     <div class="article-entry" itemprop="articleBody">
       
         <hr>
-<h2 id="UITableViewcell-下载图片的思路-沙盒的-内存-缓存-以及踩过的一些坑-这里我只说思路-代码可以去网上扒"><a href="#UITableViewcell-下载图片的思路-沙盒的-内存-缓存-以及踩过的一些坑-这里我只说思路-代码可以去网上扒" class="headerlink" title="UITableViewcell 下载图片的思路 - 沙盒的(内存)缓存,以及踩过的一些坑,这里我只说思路,代码可以去网上扒"></a>UITableViewcell 下载图片的思路 - 沙盒的(内存)缓存,以及踩过的一些坑,这里我只说思路,代码可以去网上扒</h2><p>系统的tableViewcell里面是有ImageView的属性的,所以我们可以考虑给它直接赋值<br>资源不用问,肯定要从网上下载了</p>
+<h2 id="UITableViewcell-下载图片的思路-无沙盒的-内存-缓存-以及踩过的一些坑-这里我只说思路-代码可以去网上扒"><a href="#UITableViewcell-下载图片的思路-无沙盒的-内存-缓存-以及踩过的一些坑-这里我只说思路-代码可以去网上扒" class="headerlink" title="UITableViewcell 下载图片的思路 - 无沙盒的(内存)缓存,以及踩过的一些坑,这里我只说思路,代码可以去网上扒"></a>UITableViewcell 下载图片的思路 - 无沙盒的(内存)缓存,以及踩过的一些坑,这里我只说思路,代码可以去网上扒</h2><p>系统的tableViewcell里面是有ImageView的属性的,所以我们可以考虑给它直接赋值<br>资源不用问,肯定要从网上下载了<br>无沙盒缓存每次打开都要重新下载</p>
 <ol>
 <li><p>最开始的思路呢就是给model类里添加一个url的字符串属性,然后在tableviewcontroller中的cellforrow方法中,将url取出并异步下载图片即可<br>在下载之前要给cell一个占位图,否则下载完成后的图片是没有frame的,不能显示在cell上,另外还可以通过自定义cell的方法解决这个问题</p>
 </li>
