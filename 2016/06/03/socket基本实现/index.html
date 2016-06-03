@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <title>socket基本实现 | silence的博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="用socket实现简单的即时通讯Socket非常类似于电话插座。以一个国家级电话网为例，电话的通话双方相当于相互通信的2个进程，区号是它的网络地址；区内一个单位的交换机相当于一台主机，主机分配给每个用户的局内号码相当于Socket号。任何用户在通话之前，首先要占有一部电话机，相当于申请一个Socket；同时要知道对方的号码，相当于对方有一个固定的Socket。然后向对方拨号呼叫，相当于发出连接请求">
+<meta property="og:type" content="article">
+<meta property="og:title" content="socket基本实现">
+<meta property="og:url" content="http://yoursite.com/2016/06/03/socket基本实现/index.html">
+<meta property="og:site_name" content="silence的博客">
+<meta property="og:description" content="用socket实现简单的即时通讯Socket非常类似于电话插座。以一个国家级电话网为例，电话的通话双方相当于相互通信的2个进程，区号是它的网络地址；区内一个单位的交换机相当于一台主机，主机分配给每个用户的局内号码相当于Socket号。任何用户在通话之前，首先要占有一部电话机，相当于申请一个Socket；同时要知道对方的号码，相当于对方有一个固定的Socket。然后向对方拨号呼叫，相当于发出连接请求">
+<meta property="og:image" content="http://ww4.sinaimg.cn/mw690/dbc0621cjw1f4iayemodmj20ie0i2aau.jpg">
+<meta property="og:image" content="http://ww2.sinaimg.cn/small/dbc0621cjw1f4icfyptszj20jl0ekdh9.jpg">
+<meta property="og:updated_time" content="2016-06-03T14:07:12.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="socket基本实现">
+<meta name="twitter:description" content="用socket实现简单的即时通讯Socket非常类似于电话插座。以一个国家级电话网为例，电话的通话双方相当于相互通信的2个进程，区号是它的网络地址；区内一个单位的交换机相当于一台主机，主机分配给每个用户的局内号码相当于Socket号。任何用户在通话之前，首先要占有一部电话机，相当于申请一个Socket；同时要知道对方的号码，相当于对方有一个固定的Socket。然后向对方拨号呼叫，相当于发出连接请求">
+<meta name="twitter:image" content="http://ww4.sinaimg.cn/mw690/dbc0621cjw1f4iayemodmj20ie0i2aau.jpg">
+  
+    <link rel="alternative" href="/atom.xml" title="silence的博客" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="null" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">有只小狗叫大黄</a></h1>
+		</hgroup>
+
+		
+		<p class="header-subtitle">一个资深小白的学习经历</p>
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						<div class="icon-wrap icon-link hide" data-idx="2">
+							<div class="loopback_l"></div>
+							<div class="loopback_r"></div>
+						</div>
+						
+						
+						<div class="icon-wrap icon-me hide" data-idx="3">
+							<div class="user"></div>
+							<div class="shoulder"></div>
+						</div>
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>Menu</li>
+						<li>Tags</li>
+						
+						<li>Links</li>
+						
+						
+						<li>Über</li>
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">所有文章</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="#" title="github">github</a>
+					        
+								<a class="weibo" target="_blank" href="#" title="weibo">weibo</a>
+					        
+								<a class="rss" target="_blank" href="#" title="rss">rss</a>
+					        
+								<a class="zhihu" target="_blank" href="#" title="zhihu">zhihu</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						
+					</div>
+				</section>
+				
+				
+				
+				<section class="switch-part switch-part3">
+					<div id="js-friends">
+					
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">奥巴马的博客</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">卡卡的美丽传说</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">本泽马的博客</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">吉格斯的博客</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">习大大大不同</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">托蒂的博客</a>
+			        
+			        </div>
+				</section>
+				
+
+				
+				
+				<section class="switch-part switch-part4">
+				
+					<div id="js-aboutme">我是谁，我从哪里来，我到哪里去？我就是我，是颜色不一样的吃货…</div>
+				</section>
+				
+			</div>
+		</div>
+	</header>				
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">有只小狗叫大黄</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+			
+				<img lazy-src="null" class="js-avatar">
+			
+			</div>
+			<hgroup>
+			  <h1 class="header-author">有只小狗叫大黄</h1>
+			</hgroup>
+			
+			<p class="header-subtitle">一个资深小白的学习经历</p>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">所有文章</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="#" title="github">github</a>
+			        
+						<a class="weibo" target="_blank" href="#" title="weibo">weibo</a>
+			        
+						<a class="rss" target="_blank" href="#" title="rss">rss</a>
+			        
+						<a class="zhihu" target="_blank" href="#" title="zhihu">zhihu</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+
+      <div class="body-wrap"><article id="post-socket基本实现" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/06/03/socket基本实现/" class="article-date">
+  	<time datetime="2016-06-03T12:15:35.000Z" itemprop="datePublished">2016-06-03</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      socket基本实现
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+        
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="用socket实现简单的即时通讯"><a href="#用socket实现简单的即时通讯" class="headerlink" title="用socket实现简单的即时通讯"></a>用socket实现简单的即时通讯</h1><p>Socket非常类似于电话插座。以一个国家级电话网为例，电话的通话双方相当于相互通信的2个进程，区号是它的网络地址；区内一个单位的交换机相当于一台主机，主机分配给每个用户的局内号码相当于Socket号。任何用户在通话之前，首先要占有一部电话机，相当于申请一个Socket；同时要知道对方的号码，相当于对方有一个固定的Socket。然后向对方拨号呼叫，相当于发出连接请求（假如对方不在同一区内，还要拨对方区号，相当于给出网络地址）。假如对方在场并空闲（相当于通信的另一主机开机且可以接受连接请求），拿起电话话筒，双方就可以正式通话，相当于连接成功。双方通话的过程，是一方向电话机发出信号和对方从电话机接收信号的过程，相当于向Socket发送数据和从socket接收数据。通话结束后，一方挂起电话机相当于关闭Socket，撤消连接。<br>下图诠释了socket的基本原理<br><img src="http://ww4.sinaimg.cn/mw690/dbc0621cjw1f4iayemodmj20ie0i2aau.jpg" alt=""></p>
+<h2 id="下面来根据图片打一下代码-这里用的第三方GCDAsyncSocket"><a href="#下面来根据图片打一下代码-这里用的第三方GCDAsyncSocket" class="headerlink" title="下面来根据图片打一下代码 这里用的第三方GCDAsyncSocket"></a>下面来根据图片打一下代码 这里用的第三方GCDAsyncSocket</h2><h3 id="服务端"><a href="#服务端" class="headerlink" title="服务端"></a>服务端</h3><ol>
+<li>首先初始化一个socket对象,为了永久性持有,把socket声明为一个属性<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//初始化socket</span></span><br><span class="line">   <span class="keyword">self</span>.socketA = [[GCDAsyncSocket alloc]initWithDelegate:<span class="keyword">self</span> delegateQueue:dispatch_get_main_queue()];</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>初始化同时设置代理,并遵循协议<gcdasyncsocketdelegate></gcdasyncsocketdelegate></p>
+<ol>
+<li><p>绑定端口号,图上的第二步Bind()</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 绑定端口</span></span><br><span class="line">    <span class="comment">// 0- 1024 是系统用的,1025 - 65535</span></span><br><span class="line">    <span class="built_in">NSError</span> * error = <span class="literal">nil</span>;</span><br><span class="line">    [<span class="keyword">self</span>.socketA acceptOnPort:<span class="number">6001</span> error:&amp;error];</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>监听 代码就是第二步,他和绑定端口一起执行了 这时候服务器的socket并没有被打开</p>
+</li>
+<li><p>accept接受客户端的socker 这是代理方法,只要客户端发起连接请求,就会执行这个方法 图上的阻塞直到客户端连接就是服务器socket接收到客户端socket请求，被动打开，开始接收客户端请求，直到客户端返回连接信息。这时候socket进入阻塞状态，所谓阻塞即accept()方法一直到客户端返回连接信息后才返回，开始接收下一个客户端连接请求 每当有newsocket连接都要监听有没有数据可读<br>[newSocket readDataWithTimeout:-1 tag:0];<br>服务端其实只负责监听客户端的连接,当客户端与服务端建立socket连接后,read和write其实都是clientSocket即下面方法参数中的newSocket,此处附图<br><img src="http://ww2.sinaimg.cn/small/dbc0621cjw1f4icfyptszj20jl0ekdh9.jpg" alt=""></p>
+</li>
+</ol>
+<h3 id="这里搞清楚客户端与服务端通信不是给服务器发信息-而是给服务器的与客户端socket配对的socket发信息-读信息也是"><a href="#这里搞清楚客户端与服务端通信不是给服务器发信息-而是给服务器的与客户端socket配对的socket发信息-读信息也是" class="headerlink" title="这里搞清楚客户端与服务端通信不是给服务器发信息,而是给服务器的与客户端socket配对的socket发信息,读信息也是"></a><strong>这里搞清楚客户端与服务端通信不是给服务器发信息,而是给服务器的与客户端socket配对的socket发信息,读信息也是</strong></h3><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//接受一个新的客户端socket</span></span><br><span class="line"><span class="comment">//1 服务端的socket 2 客户端的socket</span></span><br><span class="line">-(<span class="keyword">void</span>)socket:(GCDAsyncSocket *)sock didAcceptNewSocket:(GCDAsyncSocket *)newSocket&#123;</span><br><span class="line">    [<span class="keyword">self</span>.array addObject:newSocket];</span><br><span class="line">    <span class="comment">//监听客户端有没有数据上传</span></span><br><span class="line">    <span class="comment">//timeout -1代表不超时,tag标识</span></span><br><span class="line">    [newSocket readDataWithTimeout:<span class="number">-1</span> tag:<span class="number">0</span>];</span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"port:%d,host%@"</span>,newSocket.connectedPort,newSocket.connectedHost);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ol>
+<li><p>接收到信息的处理,received() 上面接受accept方法中必须调用[newSocket readDataWithTimeout:-1 tag:0];<br>这个代理方法才会执行,就是下面这个方法,当读取到数据的时候服务器处理请求,那就[socket writeData:data withTimeout:-1 tag:0];给客户端发送相同的</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">-(<span class="keyword">void</span>)socket:(GCDAsyncSocket *)sock didReadData:(<span class="built_in">NSData</span> *)data withTag:(<span class="keyword">long</span>)tag&#123;</span><br><span class="line">    <span class="comment">//把当前客户端的数据转发给其他的客户端</span></span><br><span class="line">    <span class="keyword">for</span> (GCDAsyncSocket * socket <span class="keyword">in</span> <span class="keyword">self</span>.array) &#123;</span><br><span class="line">        <span class="comment">//不发送给自己 这个sock是自己的clientsocket</span></span><br><span class="line">        <span class="keyword">if</span> (socket != sock) &#123;</span><br><span class="line">            [socket writeData:data withTimeout:<span class="number">-1</span> tag:<span class="number">0</span>];</span><br><span class="line">        &#125;</span><br><span class="line">        [socket readDataWithTimeout:<span class="number">-1</span> tag:<span class="number">0</span>];</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>写入成功会调用这个代理方法</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">-(<span class="keyword">void</span>)socket:(GCDAsyncSocket *)sock didWriteDataWithTag:(<span class="keyword">long</span>)tag&#123;</span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"写入成功"</span>);</span><br><span class="line">&#125;</span><br><span class="line">``` </span><br><span class="line"><span class="meta">### 客户端</span></span><br><span class="line"><span class="number">1.</span> 和服务端一样,也要声明socket属性,然后初始化,初始化代码也和服务端一样</span><br><span class="line"><span class="number">2.</span> 向服务端发送连接请求connect</span><br><span class="line">```objc</span><br><span class="line"><span class="comment">//2 发送连接请求</span></span><br><span class="line">    <span class="built_in">NSError</span> * error = <span class="literal">nil</span>;</span><br><span class="line">    [<span class="keyword">self</span>.socketA connectToHost:<span class="string">@"127.0.0.1"</span> onPort:<span class="number">6001</span> error:&amp;error];</span><br><span class="line">    <span class="keyword">if</span> (error) &#123;</span><br><span class="line">        <span class="built_in">NSLog</span>(<span class="string">@"%@"</span>,error);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>发送连接请求建立连接,连接成功或连接失败都会返回信息,调用不同的代理方法,打个nslog确认一下,如果连接成功就要监听服务器返回的消息[sock readDataWithTimeout:-1 tag:0];</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//连接成功</span></span><br><span class="line">-(<span class="keyword">void</span>)socket:(GCDAsyncSocket *)sock didConnectToHost:(<span class="built_in">NSString</span> *)host port:(uint16_t)port&#123;</span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"与服务器连接成功"</span>);</span><br><span class="line">    <span class="comment">//监听有没有数据可读</span></span><br><span class="line">    [sock readDataWithTimeout:<span class="number">-1</span> tag:<span class="number">0</span>];</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//断开连接</span></span><br><span class="line">-(<span class="keyword">void</span>)socketDidDisconnect:(GCDAsyncSocket *)sock withError:(<span class="built_in">NSError</span> *)err&#123;</span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"与服务器断开连接"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>4.向服务器端的socket发送信息<br>[self.socketA writeData:[str dataUsingEncoding:NSUTF8StringEncoding] withTimeout:-1 tag:0];<br>5.接受信息<br><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">-(<span class="keyword">void</span>)socket:(GCDAsyncSocket *)sock didReadData:(<span class="built_in">NSData</span> *)data withTag:(<span class="keyword">long</span>)tag&#123;</span><br><span class="line">    <span class="built_in">NSString</span> * str = [[<span class="built_in">NSString</span> alloc]initWithData:data encoding:<span class="built_in">NSUTF8StringEncoding</span>];</span><br><span class="line">    <span class="keyword">if</span> (str) &#123;</span><br><span class="line">        <span class="comment">//当接受到信息时把信息展示到tableView上</span></span><br><span class="line">        [<span class="keyword">self</span>.messageArray addObject:str];</span><br><span class="line">        [<span class="keyword">self</span>.messagetableView reloadData];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//读取完信息后继续监听来自服务端socket的消息,否则读取一次后再也不会调用此方法</span></span><br><span class="line">    [<span class="keyword">self</span>.socketA readDataWithTimeout:<span class="number">-1</span> tag:<span class="number">0</span>];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2016/05/26/block的使用/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">block的使用</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<div class="share_jia">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">Share to: &nbsp; </span>
+		<a class="jiathis_button_facebook"></a> 
+    <a class="jiathis_button_twitter"></a>
+    <a class="jiathis_button_plus"></a> 
+    <a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="socket基本实现" data-title="socket基本实现" data-url="http://yoursite.com/2016/06/03/socket基本实现/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"true"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2016 有只小狗叫大黄
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false
+	}
+</script>
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+<script src="/js/main.js"></script>
+
+
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  </div>
+</body>
+</html>
